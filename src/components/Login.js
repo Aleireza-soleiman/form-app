@@ -1,5 +1,9 @@
 import React , { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
+//toast
+import { ToastContainer } from 'react-toastify';
+import { notify } from './toast';
+import 'react-toastify/dist/ReactToastify.css';
 //function
 import { validate } from '../functions/validate';
 //styles
@@ -22,7 +26,21 @@ const Login = () => {
     const focusHandler = event =>{
         setTouched({...touched , [event.target.name] : true})
     }
-    const submitHandler = event =>{ event.preventDefault();}
+    const submitHandler = event =>{ 
+        event.preventDefault();
+        if (!Object.keys(errors).length) {
+            notify("You signed up successfully", "success")
+        } else {
+            notify("Invalid data!", "error")
+            setTouched({
+                name: true,
+                email: true,
+                password: true,
+                confirmPassword: true,
+                isAccepted: true
+            })
+        }    
+    }
 
     return (
         <div className={styles.container} >
@@ -43,6 +61,7 @@ const Login = () => {
                     <button type="submit">Login</button>
                 </div>
             </form>
+            <ToastContainer/>
         </div>
     );
 };
