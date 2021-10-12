@@ -2,6 +2,8 @@ import React , { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 //function
 import { validate } from '../functions/validate';
+//styles
+import styles from "./Styles.module.css";
 const Login = () => {
     const [touched , setTouched] = useState({});
     const [errors , setErrors] = useState({});
@@ -20,23 +22,23 @@ const Login = () => {
     const focusHandler = event =>{
         setTouched({...touched , [event.target.name] : true})
     }
-    const submitHandler = event => event.preventDefault();
+    const submitHandler = event =>{ event.preventDefault();}
 
     return (
-        <div>
-            <form onSubmit={submitHandler} >
-                <h2>Login</h2>
-                <div>
+        <div className={styles.container} >
+            <form className={styles.formContainer} onSubmit={submitHandler} >
+                <h2 className={styles.header} >Login</h2>
+                <div className={styles.formField} >
                     <label>Email</label>
-                    <input type="text" name="email" value={data.email} onChange={changeHandler} onFocus={focusHandler} />
+                    <input className={(errors.email && touched.email) ? styles.uncompleted : styles.formInput} type="text" name="email" value={data.email} onChange={changeHandler} onFocus={focusHandler} />
                     {errors.email && touched.email && <span>{errors.email}</span>}
                 </div>
-                <div>
+                <div className={styles.formField} >
                     <label>Password</label>
-                    <input type="text" name="password" value={data.password} onChange={changeHandler} onFocus={focusHandler} />
+                    <input className={(errors.password && touched.password) ? styles.uncompleted : styles.formInput} type="text" name="password" value={data.password} onChange={changeHandler} onFocus={focusHandler} />
                     {errors.password && touched.password && <span>{errors.password}</span>}
                 </div>
-                <div>
+                <div className={styles.formButtons} >
                     <Link to="/signup" >SignUp</Link>
                     <button type="submit">Login</button>
                 </div>
